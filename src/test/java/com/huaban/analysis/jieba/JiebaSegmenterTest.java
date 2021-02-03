@@ -4,11 +4,16 @@
 package com.huaban.analysis.jieba;
 
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
+import com.huaban.analysis.jieba.viterbi.FinalSeg;
 import junit.framework.TestCase;
 
 import org.junit.Test;
@@ -119,7 +124,7 @@ public class JiebaSegmenterTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        WordDictionary.getInstance().init(Paths.get("conf"));
+        WordDictionary.getInstance().init("/conf/sougou.dict","/conf/user.dict");
     }
 
 
@@ -137,7 +142,67 @@ public class JiebaSegmenterTest extends TestCase {
         }
     }
 
+    @Test
+    public void testCut() {
+        List<String> keywordList = new ArrayList<>();
+        /*keywordList.add("英语六年级下册");
+        keywordList.add("大气环境");
+        keywordList.add("三国演义 人民文学");
+        keywordList.add("雪国之劫");
+        keywordList.add("法律适用书籍");
+        keywordList.add("道德与法治三年级");
+        keywordList.add("破案科学：侦查逻辑与经验");
+        keywordList.add("简爱");
+        keywordList.add("能力培养与测试:物理");
+        keywordList.add("写给孩子们的好童诗");
+        keywordList.add("韩国史");
+        keywordList.add("卫生健康常用法律法规汇编");
+        keywordList.add("历史的填空人民文学");
+        keywordList.add("抖音营叶澜：《教育概论》，人民教育出版社，2006年版销");
+        keywordList.add("现代局部战争装备运用与保障战例研");
+        keywordList.add("工业机器人性能测试技术浙江大学出版社");
+        keywordList.add("一级建造师考试市政辅导用书");
+        keywordList.add("中华人民共和国民法典");
+        keywordList.add("新思路辅导与训练 数学六年级");
+        keywordList.add("狐狸和仙鹤");
+        keywordList.add("汪汪队立大功中英双语有声故事书(10册)");
+        keywordList.add("湖北省事业单位公共基础知识");
+        keywordList.add("混凝土质量控制标准");
+        keywordList.add("将无同");
+        keywordList.add("这题超纲了");
+        keywordList.add("破云");
+        keywordList.add("破云,将无同,这题超纲了");
+        keywordList.add("从小学电脑");
+        keywordList.add("魏东海");
+        keywordList.add("栝楼生产技术");
+        keywordList.add("世说新语朱碧莲");
+        keywordList.add("曹操传");
+        keywordList.add("曹操的诗");
+        keywordList.add("冷场");*/
+        keywordList.add("笨狼的故事");
+        keywordList.add("乖乖狗写给孩子们的好童诗");
+        keywordList.add("大冰好吗");
+        keywordList.add("万多亿写给孩子们的好童诗");
+        keywordList.add("万多亿写给孩子们的好童诗");
+        keywordList.add("用百度写给孩子们的好童诗");
+        keywordList.add("座火写给孩子们的好童诗");
+        keywordList.add("汤小团第七卷");
+        keywordList.add("作弄人写给孩子们的好童诗");
+        keywordList.add("晴天下猪系列");
+        keywordList.add("华西日历辟谣小分队健康日历 2021");
+        keywordList.add("小狗钱钱");
+        WordDictionary.getInstance().addUserWord("笨狼");
+        WordDictionary.getInstance().addUserWord("微积分习题集");
+        //WordDictionary.getInstance().addUserWord("大冰");
+        //WordDictionary.getInstance().addUserWord("晴天下猪");
+        //WordDictionary.getInstance().addUserWord("天下");
 
+        for (String keyWords : keywordList) {
+            System.out.println("keyword：" + keyWords);
+            List<SegToken> tokens = segmenter.process(keyWords, SegMode.SEARCH);
+            System.out.println(String.join(",",tokens.stream().map(e->e.word).filter(e->e.length()>1).collect(Collectors.toList())));
+        }
+    }
     @Test
     public void testCutForIndex() {
         for (String sentence : sentences) {

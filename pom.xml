@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.huaban</groupId>
     <artifactId>jieba-analysis</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3.2-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>结巴分词工具(jieba for java)</name>
@@ -56,6 +56,23 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -157,6 +174,16 @@
             </plugin>
         </plugins>
        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
     
 
@@ -194,9 +221,13 @@
 
     <distributionManagement>
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Nexus Staging Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>winxuan-repository</id>
+            <url>http://maven.i.winxuan.com:8081/content/repositories/winxuan-repository/</url>
         </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://maven.i.winxuan.com:8081/content/repositories/snapshots</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
     </distributionManagement>
 </project>
